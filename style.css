@@ -1332,3 +1332,75 @@ h3.area-name {
     overflow-x: hidden;
   }
 }
+
+/* =========================================================
+   PÁGINA LEGAL (Política de Privacidade)
+   ========================================================= */
+.legal-doc h2 {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  color: var(--white);
+  margin: 2rem 0 0.6rem;
+}
+.legal-doc p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.legal-doc a.gold { color: var(--gold); }
+.legal-doc a.gold:hover { text-decoration: underline; }
+
+/* =========================================================
+   SEO LOCAL — lista de cidades atendidas
+   ========================================================= */
+.seo-cities {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 1.8rem;
+}
+.seo-cities li {
+  font-size: 0.8rem;
+  color: var(--text);
+  background: rgba(227,173,99,0.08);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.8rem;
+}
+.seo-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.seo-map-link:hover { text-decoration: underline; }
+
+/* Link de política no rodapé */
+.footer-legal-links {
+  margin-top: 0.3rem;
+}
+.footer-legal-links a {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+.footer-legal-links a:hover { color: var(--gold); }
+
+/* Bloco educativo "Por que buscar orientação" */
+.orient-block {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.orient-block p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
