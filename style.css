@@ -197,6 +197,30 @@ h2.section-title {
   z-index: 1001; /* acima do overlay (998) e do menu (999) — sempre clicável */
   touch-action: manipulation; /* elimina delay de 300ms do iOS */
   -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Checkbox que controla o menu (escondido visualmente, acessível) */
+.menu-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Troca do ícone ☰ ↔ ✕ conforme o estado do checkbox */
+.hamburger .icon-close { display: none; }
+#menu-toggle:checked ~ .hamburger .icon-open  { display: none; }
+#menu-toggle:checked ~ .hamburger .icon-close { display: block; }
+
+/* Foco por teclado destaca o hambúrguer */
+.menu-toggle:focus-visible ~ .hamburger {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* === HERO === */
@@ -807,7 +831,7 @@ footer .footer-disclaimer {
     bottom: auto;
   }
 
-  .navbar-links.open {
+  #menu-toggle:checked ~ nav .navbar-links {
     transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
@@ -854,7 +878,7 @@ footer .footer-disclaimer {
     z-index: 998;
   }
 
-  .navbar-overlay.open { display: block; }
+  #menu-toggle:checked ~ nav .navbar-overlay { display: block; }
 }
 
 /* === RESPONSIVE === */

@@ -223,8 +223,24 @@
         </div>
       </a>
 
+      <!-- Checkbox hack: o estado aberto/fechado é nativo do navegador.
+           Sem JS de toggle = sem duplo-disparo, ghost-click ou propagação. -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Abrir e fechar o menu" />
+
+      <label class="hamburger" id="hamburger" for="menu-toggle">
+        <svg class="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="5" y1="5" x2="19" y2="19"/>
+          <line x1="19" y1="5" x2="5" y2="19"/>
+        </svg>
+      </label>
+
       <nav aria-label="Menu principal">
-        <div class="navbar-overlay" id="navOverlay" role="presentation"></div>
+        <label class="navbar-overlay" id="navOverlay" for="menu-toggle" aria-hidden="true"></label>
         <ul class="navbar-links" id="navLinks" role="list">
           <li><a href="#hero">Início</a></li>
           <li><a href="#areas">Atuação</a></li>
@@ -241,14 +257,6 @@
           </li>
         </ul>
       </nav>
-
-      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
     </div>
   </header>
 
@@ -963,41 +971,18 @@
     // Ano no rodapé
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu mobile
-    const hamburger  = document.getElementById('hamburger');
+    // Menu mobile — controlado nativamente pelo checkbox #menu-toggle.
+    // O JS abaixo apenas FECHA o menu (nunca abre), então não há risco
+    // de duplo-disparo/ghost-click reabrindo ou fechando indevidamente.
+    const menuToggle = document.getElementById('menu-toggle');
     const navLinks   = document.getElementById('navLinks');
-    const navOverlay = document.getElementById('navOverlay');
 
-    // Flag: bloqueia fechamento imediato após abertura
-    // (cobre ghost-click do iOS ~300ms e transição do menu deslizando)
-    let menuJustOpened = false;
+    function closeMenu() { if (menuToggle) menuToggle.checked = false; }
 
-    function openMenu() {
-      navLinks.classList.add('open');
-      navOverlay.classList.add('open');
-      hamburger.setAttribute('aria-expanded', 'true');
-      menuJustOpened = true;
-      setTimeout(() => { menuJustOpened = false; }, 400);
-    }
-    function closeMenu() {
-      navLinks.classList.remove('open');
-      navOverlay.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      menuJustOpened = false;
-    }
-
-    // stopPropagation evita que o click do hambúrguer suba para qualquer pai
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      navLinks.classList.contains('open') ? closeMenu() : openMenu();
-    });
-
-    // Overlay só fecha se não acabou de abrir (anti ghost-click)
-    navOverlay.addEventListener('click', () => {
-      if (!menuJustOpened) closeMenu();
-    });
-
+    // Fecha ao tocar em qualquer link do menu
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+
+    // Fecha ao passar para desktop
     window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
 
     // Acordeão FAQ (abre um por vez)
