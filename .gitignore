@@ -9,3 +9,10 @@ Desktop.ini
 # Logs / temporários
 *.log
 node_modules/
+
+# Arquivos de rascunho / fontes (não fazem parte do site final)
+ChatGPT Image*.png
+hero-andre-carus.png.png
+post_insta (*).jpg
+banner.png
+banner_hero.png
