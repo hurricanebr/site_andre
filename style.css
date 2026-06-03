@@ -193,6 +193,8 @@ h2.section-title {
   cursor: pointer;
   padding: 0.3rem;
   color: var(--text);
+  position: relative;
+  z-index: 1001; /* acima do overlay (998) e do menu (999) — sempre clicável */
 }
 
 /* === HERO === */
@@ -842,7 +844,10 @@ footer .footer-disclaimer {
   .navbar-overlay {
     display: none;
     position: fixed;
-    inset: 0;
+    top: 70px;        /* começa ABAIXO da navbar — não cobre o hambúrguer */
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0,0,0,0.4);
     z-index: 998;
   }
