@@ -38,6 +38,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden; /* impede scroll lateral */
 }
 
 body {
@@ -47,6 +48,8 @@ body {
   font-weight: 400;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 img { display: block; max-width: 100%; }
@@ -1181,4 +1184,36 @@ h3.area-name {
 
   /* Steps em coluna já tratado; garante 4 passos ok */
   .steps::before { height: calc(100% - 56px); }
+
+  /* Cards em coluna: ícone acima, texto abaixo — melhor uso do espaço */
+  .area-card {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Garante que nenhum elemento filho exceda a largura do card */
+  .area-card,
+  .area-icon,
+  .area-body {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Seção de seals da hero: quebra se necessário */
+  .hero-seals li {
+    font-size: 0.74rem;
+  }
+
+  /* Seção SEO: tags em coluna se necessário */
+  .seo-tags li {
+    font-size: 0.74rem;
+  }
+
+  /* Sections: garante que não extrapolam o viewport */
+  section,
+  header,
+  footer {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 }
