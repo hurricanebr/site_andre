@@ -195,6 +195,8 @@ h2.section-title {
   color: var(--text);
   position: relative;
   z-index: 1001; /* acima do overlay (998) e do menu (999) — sempre clicável */
+  touch-action: manipulation; /* elimina delay de 300ms do iOS */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* === HERO === */

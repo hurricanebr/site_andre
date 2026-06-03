@@ -964,24 +964,39 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Menu mobile
-    const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
+    const hamburger  = document.getElementById('hamburger');
+    const navLinks   = document.getElementById('navLinks');
     const navOverlay = document.getElementById('navOverlay');
+
+    // Flag: bloqueia fechamento imediato após abertura
+    // (cobre ghost-click do iOS ~300ms e transição do menu deslizando)
+    let menuJustOpened = false;
 
     function openMenu() {
       navLinks.classList.add('open');
       navOverlay.classList.add('open');
       hamburger.setAttribute('aria-expanded', 'true');
+      menuJustOpened = true;
+      setTimeout(() => { menuJustOpened = false; }, 400);
     }
     function closeMenu() {
       navLinks.classList.remove('open');
       navOverlay.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
+      menuJustOpened = false;
     }
-    hamburger.addEventListener('click', () => {
+
+    // stopPropagation evita que o click do hambúrguer suba para qualquer pai
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
       navLinks.classList.contains('open') ? closeMenu() : openMenu();
     });
-    navOverlay.addEventListener('click', closeMenu);
+
+    // Overlay só fecha se não acabou de abrir (anti ghost-click)
+    navOverlay.addEventListener('click', () => {
+      if (!menuJustOpened) closeMenu();
+    });
+
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
     window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
 
