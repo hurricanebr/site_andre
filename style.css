@@ -899,13 +899,33 @@ footer .footer-disclaimer {
 
   .hero {
     padding: 5.5rem 0 3rem;
-    background-position: 70% center;
+    /* Posiciona o rosto no quadrante superior-direito */
+    background-position: 78% top;
   }
 
   .hero::before {
     background:
-      rgba(8, 12, 20, 0.88),
-      linear-gradient(to top, rgba(8,12,20,0.75) 0%, transparent 40%);
+      /* Gradiente diagonal: escuro canto inferior-esquerdo (texto)
+         → transparente canto superior-direito (rosto do advogado) */
+      linear-gradient(
+        to bottom left,
+        rgba(8, 12, 20, 0.10) 0%,    /* topo-direita: rosto visível    */
+        rgba(8, 12, 20, 0.45) 35%,   /* transição suave                */
+        rgba(8, 12, 20, 0.82) 62%,   /* área do texto: legível         */
+        rgba(8, 12, 20, 0.97) 100%   /* canto inferior-esquerdo: escuro */
+      ),
+      /* Vinheta extra no rodapé da hero para os CTAs */
+      linear-gradient(to top, rgba(8,12,20,0.96) 0%, transparent 30%);
+  }
+
+  /* Text-shadow reforçado para garantir leitura sobre o fundo mais claro */
+  .hero h1 {
+    text-shadow: 0 2px 20px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.85);
+  }
+  .hero-eyebrow,
+  .hero-tagline,
+  .hero-complement {
+    text-shadow: 0 1px 12px rgba(0,0,0,0.95), 0 0 5px rgba(0,0,0,0.80);
   }
 
   .btn-primary { font-size: 0.95rem; padding: 0.85rem 1.5rem; }
