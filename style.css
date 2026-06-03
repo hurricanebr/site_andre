@@ -874,15 +874,25 @@ footer .footer-disclaimer {
     color: var(--gold);
   }
 
-  /* Botão WhatsApp no menu mobile */
-  .btn-nav-whatsapp {
-    display: block;
-    margin: 0.5rem 1.25rem 0;
-    padding: 0.75rem 1.25rem;
+  /* Botão WhatsApp no menu mobile.
+     Especificidade alta para vencer ".navbar-links li a" (que aplica
+     width:100%). Sem isso, 100% + margens laterais estouravam a borda. */
+  .navbar-links li a.btn-nav-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: auto;                 /* preenche o espaço menos as margens */
+    margin: 0.75rem 1.25rem 0.25rem;
+    padding: 0.85rem 1.25rem;
     border-radius: var(--radius);
     text-align: center;
     font-size: 0.95rem;
+    box-sizing: border-box;
   }
+
+  /* Esse <li> não deve ter borda inferior (fica logo após o botão) */
+  .navbar-links li:has(> .btn-nav-whatsapp) { border-bottom: none; }
 
   .navbar-overlay {
     display: none;
