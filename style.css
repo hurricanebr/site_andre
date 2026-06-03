@@ -804,7 +804,24 @@ footer .footer-disclaimer {
 
 /* === MOBILE MENU === */
 @media (max-width: 768px) {
-  .hamburger { display: flex; }
+  /* CRÍTICO: backdrop-filter cria "containing block" e prende o menu
+     fixed dentro da navbar. Removido no mobile para o menu cair na tela. */
+  .navbar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(10, 14, 22, 0.98);
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: auto; /* empurra o ícone para a direita */
+  }
+
+  /* nav só contém o menu/overlay (fixed) no mobile — tira do fluxo
+     para o hambúrguer encostar na borda direita */
+  .navbar nav {
+    position: absolute;
+  }
 
   .navbar-links {
     position: fixed;
@@ -1296,9 +1313,10 @@ h3.area-name {
     font-size: 0.74rem;
   }
 
-  /* Sections: garante que não extrapolam o viewport */
+  /* Sections: garante que não extrapolam o viewport.
+     NÃO incluir header: overflow-x:hidden torna a navbar um container
+     de rolagem e prende o menu fixo dentro dela. */
   section,
-  header,
   footer {
     max-width: 100vw;
     overflow-x: hidden;
