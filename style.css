@@ -897,35 +897,61 @@ footer .footer-disclaimer {
 
   .areas-grid { grid-template-columns: 1fr 1fr; }
 
+  /* ---- HERO MOBILE: layout em 2 zonas (foto + texto separados) ---- */
+
+  /* Remove a foto de fundo — usamos um <img> visível no topo */
   .hero {
-    padding: 5.5rem 0 3rem;
-    /* Posiciona o rosto no quadrante superior-direito */
-    background-position: 78% top;
+    padding-top: 68px;      /* apenas a altura da navbar fixa */
+    padding-bottom: 0;
+    background-image: none;
+    background-color: var(--bg);
   }
 
-  .hero::before {
-    background:
-      /* Gradiente diagonal: escuro canto inferior-esquerdo (texto)
-         → transparente canto superior-direito (rosto do advogado) */
-      linear-gradient(
-        to bottom left,
-        rgba(8, 12, 20, 0.10) 0%,    /* topo-direita: rosto visível    */
-        rgba(8, 12, 20, 0.45) 35%,   /* transição suave                */
-        rgba(8, 12, 20, 0.82) 62%,   /* área do texto: legível         */
-        rgba(8, 12, 20, 0.97) 100%   /* canto inferior-esquerdo: escuro */
-      ),
-      /* Vinheta extra no rodapé da hero para os CTAs */
-      linear-gradient(to top, rgba(8,12,20,0.96) 0%, transparent 30%);
+  /* Sem overlay no mobile — não há fundo a cobrir */
+  .hero::before { display: none; }
+
+  /* Flex coluna: foto primeiro (order:-1), texto depois */
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Text-shadow reforçado para garantir leitura sobre o fundo mais claro */
-  .hero h1 {
-    text-shadow: 0 2px 20px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.85);
+  /* Faixa de foto — sangra até as bordas do viewport */
+  .hero-image {
+    display: block !important;
+    order: -1;
+    margin: 0 -1.25rem;              /* cancela o padding do container */
+    width: calc(100% + 2.5rem);
+    height: 260px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
   }
+
+  /* Borda decorativa da foto: off no mobile */
+  .hero-image::before { display: none; }
+
+  .hero-image img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center 10%;     /* enquadra rosto + ombros */
+    border-radius: 0;
+    border: none;
+    filter: grayscale(10%);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.55);
+  }
+
+  /* Texto sobre fundo escuro sólido — sem texto-shadow necessário */
+  .hero-text {
+    padding: 1.8rem 0 2.5rem;
+  }
+
+  .hero h1,
   .hero-eyebrow,
   .hero-tagline,
   .hero-complement {
-    text-shadow: 0 1px 12px rgba(0,0,0,0.95), 0 0 5px rgba(0,0,0,0.80);
+    text-shadow: none;
   }
 
   .btn-primary { font-size: 0.95rem; padding: 0.85rem 1.5rem; }
