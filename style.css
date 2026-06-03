@@ -920,9 +920,9 @@ footer .footer-disclaimer {
   .hero-image {
     display: block !important;
     order: -1;
-    margin: 0 -1.25rem;              /* cancela o padding do container */
+    margin: 0 -1.25rem;              /* sangra até as bordas do viewport */
     width: calc(100% + 2.5rem);
-    height: 260px;
+    height: 210px;
     overflow: hidden;
     flex-shrink: 0;
     position: relative;
@@ -933,13 +933,23 @@ footer .footer-disclaimer {
 
   .hero-image img {
     width: 100%;
-    height: 260px;
+    height: 210px;
     object-fit: cover;
-    object-position: center 10%;     /* enquadra rosto + ombros */
+    object-position: center 28%;     /* foco no rosto (retrato de estúdio) */
     border-radius: 0;
     border: none;
-    filter: grayscale(10%);
-    box-shadow: 0 6px 28px rgba(0,0,0,0.55);
+    filter: none;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+  }
+
+  /* Transição suave da foto para o fundo escuro do texto */
+  .hero-image::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 70px;
+    background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    pointer-events: none;
   }
 
   /* Texto sobre fundo escuro sólido — sem texto-shadow necessário */
